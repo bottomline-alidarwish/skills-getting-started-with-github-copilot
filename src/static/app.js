@@ -15,16 +15,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Populate activities list
       Object.entries(activities).forEach(([name, details]) => {
-        const activityCard = document.createElement("div");
-        activityCard.className = "activity-card";
+        const participantsList = details.participants
+          .map((p) => `<li>${p}</li>`)
+          .join("");
 
         const spotsLeft = details.max_participants - details.participants.length;
 
+        const activityCard = document.createElement("div");
+        activityCard.className = "activity-card";
         activityCard.innerHTML = `
           <h4>${name}</h4>
           <p>${details.description}</p>
           <p><strong>Schedule:</strong> ${details.schedule}</p>
           <p><strong>Availability:</strong> ${spotsLeft} spots left</p>
+          <p><strong>Participants:</strong> ${details.participants.length}/${details.max_participants}</p>
+          <div class="participants-section">
+            <h5>Signed Up Students:</h5>
+            <ul>
+              ${participantsList}
+            </ul>
+          </div>
         `;
 
         activitiesList.appendChild(activityCard);
